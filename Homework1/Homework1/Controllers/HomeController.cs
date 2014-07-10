@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Homework1.Models;
 
 namespace Homework1.Controllers
 {
@@ -25,6 +26,13 @@ namespace Homework1.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Report()
+        {
+            var db = new 客戶資料Entities();
+
+            return View(db.SampleReport.ToList());
         }
     }
 }
