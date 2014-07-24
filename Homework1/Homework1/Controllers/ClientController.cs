@@ -7,10 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Homework1.Models;
+using Homework1.FilterAttribute;
 
 namespace Homework1.Controllers
 {
-    public class ClientController : Controller
+    [IDCheckAttribute]
+    public class ClientController : BassController
     {
         //private 客戶資料Entities db = new 客戶資料Entities();
         private 客戶資料Repository repo = RepositoryHelper.Get客戶資料Repository();
@@ -28,13 +30,25 @@ namespace Homework1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             客戶資料 客戶資料 = repo.Find(id.Value);
             if (客戶資料 == null)
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Contact = 客戶資料.客戶聯絡人.ToList();
+            ViewBag.Bank = 客戶資料.客戶銀行資訊.ToList();
+
             return View(客戶資料);
         }
+
+        [HttpPost]
+        public ActionResult Details(客戶資料 model)
+        {
+            return View();
+        }
+
 
         // GET: Client/Create
         public ActionResult Create()
@@ -112,6 +126,20 @@ namespace Homework1.Controllers
         {
             repo.DeleteForIsDelete(id);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult DownloadClient()
+        {
+            //todo: 還不能下載xlsx檔
+            //db.Configuration.LazyLoadingEnabled = false;
+            
+            var client = repo.All();
+            repo.UnitOfWork.Context.Configuration.LazyLoadingEnabled = false;
+
+
+            var jsonClient = Json(client.ToList(),JsonRequestBehavior.AllowGet);
+            var csv = File(new System.Text.UTF8Encoding().GetBytes(jsonClient.Data.ToString()), "text/csv", "Report123.csv");
+            return csv;
         }
 
         protected override void Dispose(bool disposing)

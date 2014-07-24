@@ -15,7 +15,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.客戶名稱)
+            @Html.TextBoxFor(model => model.客戶名稱)
         </dd>
 
         <dt>
@@ -23,7 +23,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.統一編號)
+            @Html.TextBoxFor(model => model.統一編號)
         </dd>
 
         <dt>
@@ -31,7 +31,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.電話)
+            @Html.TextBoxFor(model => model.電話)
         </dd>
 
         <dt>
@@ -39,7 +39,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.傳真)
+            @Html.TextBoxFor(model => model.傳真)
         </dd>
 
         <dt>
@@ -47,7 +47,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.地址)
+            @Html.TextBoxFor(model => model.地址)
         </dd>
 
         <dt>
@@ -55,11 +55,76 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Email)
+            @Html.TextBoxFor(model => model.Email)
         </dd>
 
     </dl>
 </div>
+
+
+@* Contact *@
+
+@{
+    var contact = ViewBag.Contact as List<Homework1.Models.客戶聯絡人>;
+}
+
+
+@for (int i = 0; i < Model.客戶聯絡人.Count();  i++)
+{
+
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => contact[0].職稱)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => contact[0].姓名)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => contact[0].Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => contact[0].手機)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => contact[0].電話)
+        </th>
+        <th></th>
+    </tr>
+
+    @for (int i = 0; i < contact.Count(); i++)
+    {
+        <tr>
+            <td>
+                @Html.TextBoxFor(modelItem => contact[i].職稱)
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => contact[i].姓名)
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => contact[i].Email)
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => contact[i].手機)
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => contact[i].電話)
+            </td>
+            @*<td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>*@
+        </tr>
+    }
+
+</table>
+
+@* Bank *@
+
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
